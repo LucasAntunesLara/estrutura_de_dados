@@ -1,0 +1,72 @@
+{
+	"Initiate React File": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "!r",
+		"body": [
+			"const ${1:${TM_FILENAME_BASE}} = () => {",
+			"  return <>",
+			"$3",
+			"</>",
+			"}",
+			"",
+			"export default ${1:${TM_DIRECTORY/^.*(\\/|\\\\)([^(\\/|\\\\)]+)$/$2/}}"
+		],
+	},
+	"init export": {
+		"prefix": "!ex",
+		"body": [
+			"export const $1 = () => {\nreturn (\n<>\n$2</>\n)\n}"
+		]
+	},
+	"template string": {
+		"scope": "javacript,typescript,javascriptreact,typescriptreact",
+		"prefix": "!str",
+		"body": "`$1 ${$2}`"
+	},
+	"console.log": {
+		"scope": "javacript,typescript,javascriptreact,typescriptreact",
+		"prefix": "clg",
+		"body": "console.log($1)"
+	},
+	"arrow funcion": {
+		"scope": "javacript,typescript,javascriptreact,typescriptreact",
+		"prefix": "arr",
+		"body": "const $1 = ($2) => {\n$3\n}"
+	},
+	"desestruturar array": {
+		"prefix": "dss",
+		"body": [
+			"const [$1, set${1/(.*)/${1:/capitalize}/}] = $2"
+		]
+	},
+	"useState": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "ust",
+		"body": "const [$1, set$2] = useState($3)"
+	},
+	"useEffect": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "eff",
+		"body": "useEffect(() => {\n}$1,\n[$2])"
+	},
+	"For Loop": {
+		"scope": "javascriptreact,typescriptreact",
+		"prefix": "fr",
+		"body": "{Array.from({length: $1}).map((_, index) => (\n$2))}"
+	},
+	"If ternário": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "trn",
+		"body": "$1 ? $2 : $3"
+	},
+	"Return": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "rtr",
+		"body": "return $1"
+	},
+	"Use Tailwind CSS CDN": {
+		"scope": "html,javascriptreact,typescriptreact",
+		"prefix": "tw",
+		"body": "<script src='https: //cdn.jsdelivr.net/npm/@tailwindcss/browser@4'></script>"
+	}
+}
