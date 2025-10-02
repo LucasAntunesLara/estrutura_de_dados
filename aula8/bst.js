@@ -25,12 +25,18 @@ class BST {
       if (nodeAtual.value === value) return false
 
       if (value > nodeAtual.value) {
-        if (nodeAtual.right === null) return (nodeAtual.right = node)
+        if (nodeAtual.right === null) {
+          nodeAtual.right = node
 
+          return true
+        }
         nodeAtual = nodeAtual.right
       } else {
-        if (nodeAtual.left === null) return (nodeAtual.left = node)
+        if (nodeAtual.left === null) {
+          nodeAtual.left = node
 
+          return true
+        }
         nodeAtual = nodeAtual.left
       }
     }
@@ -39,56 +45,60 @@ class BST {
   search(value) {
     let nodeAtual = this.root
 
-    while (nodeAtual <= this.root) {
+    while (nodeAtual !== null) {
       if (nodeAtual.value === value) return true
-      else
-        value > nodeAtual.value
-          ? (nodeAtual = nodeAtual.right)
-          : (nodeAtual = nodeAtual.left)
+
+      nodeAtual = value > nodeAtual.value ? nodeAtual.right : nodeAtual.left
     }
 
     return false
   }
 
   crescente() {
-    let n = []
-    let nodeAtual = this.root
+    let array = []
 
-    while (nodeAtual.right !== null) {
-      let x = nodeAtual
-      let j = x.value
-
-      for (let i = j; i >= 0; i--) {
-        n.push(j)
-        console.log('x', x)
-        i--
-      }
-
-      n.push(nodeAtual.value)
-
-      nodeAtual = nodeAtual.right
+    function inOrder(node) {
+      if (node === null) return
+      inOrder(node.left)
+      array.push(node.value)
+      inOrder(node.right)
     }
 
-    return n
+    inOrder(this.root)
+    return array
   }
 
-  getHeight() {}
+  getHeight() {
+    function height(node) {
+      if (node === null) return 0
 
-  countNodes() {}
+      const leftHeight = height(node.left)
+      const rightHeight = height(node.right)
+
+      return 1 + Math.max(leftHeight, rightHeight)
+    }
+
+    return height(this.root)
+  }
+
+  countNodes() {
+    function nodes(node) {
+      if (node === null) return 0
+
+      return 1 + nodes(node.left) + nodes(node.right)
+    }
+
+    return nodes(this.root)
+  }
 
   countLeaves() {
-    let nodeAtual = this.root
-    let leavesNumber = 0
-
-    while (true) {
-      for (let i = 0; i <= 0; i++) {
-        if (nodeAtual.right === null) leavesNumber++
-
-        nodeAtual = nodeAtual.right
-      }
-
-      if (nodeAtual.right === null) leavesNumber++
+    function leaves(node) {
+      if (node === null) return 0
+      if (node.left === null && node.right === null) return 1
+      return leaves(node.left) + leaves(node.right)
     }
+
+    return leaves(this.root)
   }
 }
 
@@ -100,19 +110,6 @@ tree.insert(3)
 tree.insert(7)
 tree.insert(15)
 tree.insert(12)
-tree.insert(69)
+tree.insert(13)
 
-// console.log('10: ', tree.search(10))
-// console.log('5: ', tree.search(5))
-// console.log('3: ', tree.search(3))
-// console.log('7: ', tree.search(7))
-// console.log('15: ', tree.search(15))
-// console.log('12: ', tree.search(12))
-
-// console.log('13: ', tree.search(13))
-// console.log('20: ', tree.search(20))
-// console.log('22: ', tree.search(22))
-// console.log('22: ', tree.search(69))
-
-console.log(tree.crescente())
-console.log('\n\n')
+console.log(tree.countLeaves())
