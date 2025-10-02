@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 01/10</title>
+</head>
+
+<body>
+  <h1 class="text-4xl font-bold text-center my-4">Fila e pila</h1>
+
+  <form action="#" onClick="" id="form">
+    <div class="flex flex-col gap-2 justify-center items-center">
+      <label for="number" class="font-bold">Número</label>
+      <input type="number" name="number" id="number"
+        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:outline-none sm:text-sm/6min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 bg-slate-100" />
+    </div>
+
+    <div class="flex flex-col gap-2 justify-center items-center">
+      <label for="number" class="font-bold">Buscar número</label>
+
+      <input type="text" name="search-number" id="search-number"
+        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:outline-none sm:text-sm/6min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 bg-slate-100" />
+    </div>
+    </div>
+
+    <div class="flex w-[90%] mx-auto justify-center items-center gap-x-8 my-6">
+      <div>
+        <h2 class="font-bold text-xl text-center">Inserir elementos</h2>
+        <button type="button"
+          class="transicao gap-x-2 rounded-xl bg-emerald-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-500/50 hover:disabled:bg-emerald-500/50"
+          onClick="insertItem()">
+          Inserir no <span class="font-bold">início</span>
+        </button>
+
+        <button type="button"
+          class="transicao gap-x-2 rounded-xl bg-emerald-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-500/50 hover:disabled:bg-emerald-500/50"
+          onClick="insertItem('FIM')">
+          Inserir no <span class="font-bold">fim</span>
+        </button>
+      </div>
+
+      <div class="h-10 w-[1px] bg-slate-300 mx-4"></div>
+
+      <div>
+        <h2 class="font-bold text-xl text-center">Excluir elementos</h2>
+
+        <button type="button"
+          class="transicao gap-x-2 rounded-xl bg-rose-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-rose-500/50 hover:disabled:bg-rose-500/50">Excluir
+          no <span class="font-bold" onClick="removeItem()">início</span>
+        </button>
+
+        <button type="button"
+          class="transicao gap-x-2 rounded-xl bg-rose-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-rose-500/50 hover:disabled:bg-rose-500/50">Excluir
+          no <span class="font-bold" onClick="removeItem('FIM')">fim</span></button>
+      </div>
+    </div>
+  </form>
+
+  <h3 class="font-bold text-xl text-center my-4">Itens</h3>
+  <div
+    class="flex flex-wrap w-1/2 mx-auto my-auto gap-2 *:bg-sky-200 *:hover:bg-sky-300 *:rounded-xl *:py-2 *:px-4 *:w-fit *:hover:cursor-pointer *:transition text-sky-700 font-bold"
+    id="itens-list">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
