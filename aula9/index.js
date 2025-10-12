@@ -1,59 +1,3 @@
-//ações no início fila
-//ações no fim pilha
-//usar lista
-
-//array que comça com 0
-//métodos para cada tipo de inclusão e exclusão
-//dependendo do tipo escolhido, altera o array e
-//exibe a lista atualizada na tela
-
-// class Fila {
-//   constructor(tamanho) {
-//     this.array = new Array(tamanho)
-//     this.topo = -1
-//     this.tamanho = tamanho
-//   }
-
-//   isEmpty() {
-//     return this.topo === -1
-//   }
-//   isFull() {
-//     return this.topo === this.tamanho - 1
-//   }
-//   size() {
-//     return this.topo + 1
-//   }
-
-//   push(elemento) {
-//     if (this.isFull()) {
-//       console.log('Erro: pilha cheia.')
-//       return
-//     }
-//     this.topo++
-//     this.array[this.topo] = elemento
-//   }
-
-//   pop() {
-//     if (this.isEmpty()) {
-//       console.log('Erro: pilha vazia.')
-//       return null
-//     }
-
-//     const elemento = this.top()
-//     this.topo--
-//     return elemento
-//   }
-
-//   top() {
-//     return this.array[this.topo]
-//   }
-
-//   imprimir() {
-//     for (let i = 0; i <= this.topo; i++) {
-//       console.log(this.array[i])
-//     }
-//   }
-// }
 class Node {
   constructor(value) {
     this.value = value
@@ -67,14 +11,12 @@ class List {
   }
 
   inserirNoInicio(value) {
-    // O(1)
     const novo = new Node(value)
     novo.next = this.inicio
     this.inicio = novo
   }
 
   inserirNoFim(value) {
-    //O(n)
     const novo = new Node(value)
 
     if (this.inicio === null) {
@@ -139,21 +81,40 @@ class List {
     return this.inicio.value
   }
 
-  //rever esse método
-  //garantir que atualize a rendenização da lista de acordo com o actionType
-  updateListRender(actionType) {
+  includes(item) {
+    let actualNode = this.inicio
+    const searchValue = Number(item)
+
+    while (actualNode !== null) {
+      if (Number(actualNode.value) === searchValue) return true
+      actualNode = actualNode.next
+    }
+
+    return false
+  }
+
+  updateListRender() {
     const itensList = document.querySelector('#itens-list')
 
-    let n = this.inicio
+    itensList.innerHTML = ''
 
-    while (n !== null) {
+    let actualNode = this.inicio
+    let index = 0
+
+    while (actualNode !== null) {
       const newItem = document.createElement('span')
-      newItem.innerHTML = n.value
+      newItem.innerHTML = actualNode.value
+      newItem.id = `item-${index}-${actualNode.value}`
+
       itensList.appendChild(newItem)
 
-      n = n.next
+      actualNode = actualNode.next
+      index++
     }
-    console.log('\n')
+  }
+
+  isEmpty() {
+    return this.inicio === null
   }
 }
 
@@ -191,39 +152,102 @@ class Pilha {
   }
 }
 
-const inserirNoFim = () => {
+const list = new List()
+
+// list.inserirNoInicio(10)
+// list.inserirNoInicio(105)
+// list.inserirNoInicio(104)
+// list.inserirNoInicio(103)
+// list.inserirNoInicio(102)
+// list.inserirNoInicio(100)
+// list.inserirNoInicio(108)
+// list.inserirNoInicio(8)
+// list.inserirNoInicio(20)
+// list.inserirNoInicio(30)
+// list.inserirNoInicio(40)
+// list.inserirNoInicio(50)
+
+const INSERTION_START = 'START'
+const INSERTION_END = 'END'
+
+// const showToast = message => {
+//   const toast = document.createElement('div')
+//   toast.className =
+//     'fixed bottom-5 right-1/2 translate-x-1/2 bg-neutral-800 text-white py-2 px-4 rounded shadow-lg z-50 opacity-90 font-bold'
+//   toast.innerHTML = message
+
+//   document.body.appendChild(toast)
+
+//   setTimeout(() => {
+//     toast.remove()
+//   }, 3000)
+// }
+
+const insertItem = (insertionType = INSERTION_START) => {
   const number = document.querySelector('#number')
   const item = number.value
 
-  const list = new List()
-  list.inserirNoFim(item)
-  list.mostrar()
-}
+  if (!item || isNaN(item)) {
+    alert('Por favor, insira um número válido.')
+    return
+  }
 
-const insertItem = (insertionType = 'INÍCIO') => {
-  const number = document.querySelector('#number')
-  const item = number.value
+  if (list.isEmpty()) {
+    document.querySelector('#actionDeleteToggle').disabled = false
+    document.querySelector('#search-item').disabled = false
+  }
 
-  const list = new List()
+  if (insertionType === INSERTION_START) list.inserirNoInicio(item)
+  else list.inserirNoFim(item)
 
-  insertionType === 'INÍCIO'
-    ? list.inserirNoInicio(item)
-    : list.inserirNoFim(item)
-
-  console.log(insertionType)
+  // showToast(`Item ${item} adicionado no ${insertionType.toLowerCase()}.`)
+  number.value = ''
   list.updateListRender()
 }
 
-const removeItem = (insertionType = 'INÍCIO') => {
-  const number = document.querySelector('#number')
-  const item = number.value
+const removeItem = (insertionType = INSERTION_START) => {
+  if (list.isEmpty()) return
 
-  const list = new List()
+  const removedItem =
+    insertionType === INSERTION_START
+      ? list.removerNoInicio()
+      : list.removerNoFim()
 
-  insertionType === 'INÍCIO'
-    ? list.removerNoInicio(item)
-    : list.removerNoFim(item)
+  // if (removedItem !== null) {
+  //   showToast(`Item ${removedItem} removido do ${insertionType.toLowerCase()}.`)
+  // }
 
-  console.log(insertionType)
   list.updateListRender()
+
+  if (list.isEmpty()) {
+    document.querySelector('#actionDeleteToggle').disabled = true
+    document.querySelector('#search-item').disabled = true
+  }
+}
+const searchItem = () => {
+  const input = document.querySelector('#search-item')
+
+  input.addEventListener('input', () => {
+    const searchValue = input.value
+    const allItems = document.querySelectorAll('#itens-list span')
+
+    allItems.forEach(item => item.classList.remove('bg-sky-500'))
+
+    if (!searchValue) return
+
+    allItems.forEach(item => {
+      // O id é no formato "item-index-value", então pegamos o valor após o último "-"
+      const itemValue = item.id.split('-').pop()
+      if (itemValue === searchValue) item.classList.add('bg-sky-500')
+    })
+  })
+}
+
+window.onload = () => {
+  list.updateListRender()
+
+  if (list.isEmpty()) {
+    document.querySelector('#actionDeleteToggle').disabled = true
+    document.querySelector('#search-item').disabled = true
+  }
 }

@@ -8,65 +8,93 @@
   <title>Aula 01/10</title>
 </head>
 
-<body>
-  <h1 class="text-4xl font-bold text-center my-4">Fila e pila</h1>
+<body class="bg-neutral-950">
+  <header>
+    <h1 class="text-4xl font-bold text-center my-4 text-sky-500">Fila e Pila</h1>
+  </header>
 
-  <form action="#" onClick="" id="form">
-    <div class="flex flex-col gap-2 justify-center items-center">
-      <label for="number" class="font-bold">Número</label>
-      <input type="number" name="number" id="number"
-        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:outline-none sm:text-sm/6min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 bg-slate-100" />
-    </div>
+  <main>
+    <form action="#" id="form">
+      <section class="flex justify-between items-center w-[80%] mx-auto gap-10 my-6 items-center">
+        <div class="w-full flex flex-col gap-4">
+          <fieldset>
+            <legend class="sr-only">Adicionar número</legend>
+            <div class="flex gap-2 flex flex-col gap-2 justify-center items-center w-full">
+              <label for="number" class="font-bold text-zinc-50">Adicionar número</label>
+              <input type="number" name="number" id="number"
+                class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:border-none sm:text-sm/6 min-w-0 flex-auto px-3.5 py-2 text-base border-b-1 -border-offset-1 border-neutral-800 placeholder:text-gray-500 focus:border-2 focus:-border-offset-2 focus:border-indigo-500 sm:text-sm/6 pl-10 text-zinc-50 w-full focus:ring-b-2 focus:ring-b-sky-500 disabled:cursor-not-allowed disabled:border-neutral-800/50 outline-none" />
+            </div>
+          </fieldset>
 
-    <div class="flex flex-col gap-2 justify-center items-center">
-      <label for="number" class="font-bold">Buscar número</label>
+          <section aria-labelledby="action-menu-title" class="fixed right-16 bottom-6 z-50">
+            <h2 id="action-menu-title" class="sr-only">Menu de ações</h2>
+            <div id="actionMenu"
+              class="mb-3 flex flex-col items-end space-y-3 opacity-0 pointer-events-none transform scale-90 transition-all duration-200
+              *:flex *:items-center *:gap-3 *:px-4 *:py-2 *:rounded-full *:bg-emerald-100 *:text-emerald-700 *:shadow-lg *:ring-1 *:ring-emerald-200 *:hover:shadow-xl *:focus:outline-none *:focus:ring-2 *:focus:ring-offset-2 *:focus:ring-emerald-500">
+              <button onclick="insertItem()" type="button">Adicionar no início</button>
+              <button onclick="insertItem('FIM')" type="button">Adicionar no final</button>
+            </div>
+            <button id="actionToggle" aria-expanded="false" aria-controls="actionMenu"
+              class="w-14 h-14 rounded-full bg-emerald-600 text-white shadow-2xl flex items-center justify-center hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition transform disabled:cursor-not-allowed disabled:bg-emerald-600/50 hover:disabled:bg-emerald-600/50"
+              type="button">
+              <svg id="actionIcon" class="w-6 h-6 transition-transform duration-200" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+          </section>
 
-      <input type="text" name="search-number" id="search-number"
-        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:outline-none sm:text-sm/6min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 bg-slate-100" />
-    </div>
-    </div>
+          <section aria-labelledby="delete-menu-title" class="fixed right-0 bottom-6 z-50">
+            <h2 id="delete-menu-title" class="sr-only">Menu de exclusão</h2>
+            <div id="actionDeleteMenu"
+              class="mb-3 flex flex-col items-start space-y-3 opacity-0 pointer-events-none transform scale-90 transition-all duration-200
+              *:flex *:items-center *:gap-3 *:px-4 *:py-2 *:rounded-full *:bg-white *:shadow-lg *:ring-1 *:ring-gray-200 *:hover:shadow-xl *:focus:outline-none *:focus:ring-2 *:focus:ring-offset-2 *:focus:ring-red-500">
+              <button onclick="removeItem()" type='button'>Excluir no início</button>
+              <button onclick="removeItem('FIM')" type='button'>Excluir no fim</button>
+            </div>
+            <button id="actionDeleteToggle" aria-expanded="false" aria-controls="actionDeleteMenu"
+              class="w-14 h-14 rounded-full bg-red-600 text-white shadow-2xl flex items-center justify-center hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 transition transform disabled:bg-red-600/50 hover:disabled:bg-red-600/50"
+              type='button'>
+              <svg id="actionDeleteIcon" class="w-6 h-6 transition-transform duration-200" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0h-2m-6 0H7m3-3h4a1 1 0 011 1v1H8V5a1 1 0 011-1z" />
+              </svg>
+              <span class="sr-only">Abrir menu de exclusão</span>
+            </button>
+          </section>
+        </div>
 
-    <div class="flex w-[90%] mx-auto justify-center items-center gap-x-8 my-6">
-      <div>
-        <h2 class="font-bold text-xl text-center">Inserir elementos</h2>
-        <button type="button"
-          class="transicao gap-x-2 rounded-xl bg-emerald-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-500/50 hover:disabled:bg-emerald-500/50"
-          onClick="insertItem()">
-          Inserir no <span class="font-bold">início</span>
-        </button>
+        <fieldset class="flex flex-col gap-2 justify-center items-center w-full">
+          <legend class="sr-only">Buscar número</legend>
+          <label for="search-item" class="font-bold text-zinc-50">Buscar número</label>
+          <div class="relative w-full group">
+            <input type="number" id="search-item" name="search-item" oninput='searchItem()'
+              class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-500 focus:border-none sm:text-sm/6 min-w-0 flex-auto px-3.5 py-2 text-base border-b-1 -border-offset-1 border-neutral-800 placeholder:text-gray-500 focus:border-2 focus:-border-offset-2 focus:border-indigo-500 sm:text-sm/6 pl-10 text-zinc-50 w-full focus:ring-b-2 focus:ring-b-sky-500 disabled:cursor-not-allowed disabled:border-neutral-800/50 outline-none">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6 text-white group-focus-within:text-sky-500">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+    </form>
 
-        <button type="button"
-          class="transicao gap-x-2 rounded-xl bg-emerald-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-500/50 hover:disabled:bg-emerald-500/50"
-          onClick="insertItem('FIM')">
-          Inserir no <span class="font-bold">fim</span>
-        </button>
+    <section class="flex flex-col bg-neutral-900/20 w-[70%] mx-auto rounded-xl p-4">
+      <h2 class="font-bold text-xl text-center my-4 text-zinc-50">Itens</h2>
+      <div
+        class="flex flex-wrap w-full mx-auto my-auto gap-2 *:bg-sky-2000 *:hover:border-slate-600 *:border-2 *:border-slate-700 *:rounded-xl *:py-2 *:px-4 *:w-fit *:hover:cursor-pointer *:transition text-white font-bold"
+        id="itens-list">
       </div>
-
-      <div class="h-10 w-[1px] bg-slate-300 mx-4"></div>
-
-      <div>
-        <h2 class="font-bold text-xl text-center">Excluir elementos</h2>
-
-        <button type="button"
-          class="transicao gap-x-2 rounded-xl bg-rose-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-rose-500/50 hover:disabled:bg-rose-500/50">Excluir
-          no <span class="font-bold" onClick="removeItem()">início</span>
-        </button>
-
-        <button type="button"
-          class="transicao gap-x-2 rounded-xl bg-rose-500 px-5 py-2 text-zinc-50 hover:cursor-pointer hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-rose-500/50 hover:disabled:bg-rose-500/50">Excluir
-          no <span class="font-bold" onClick="removeItem('FIM')">fim</span></button>
-      </div>
-    </div>
-  </form>
-
-  <h3 class="font-bold text-xl text-center my-4">Itens</h3>
-  <div
-    class="flex flex-wrap w-1/2 mx-auto my-auto gap-2 *:bg-sky-200 *:hover:bg-sky-300 *:rounded-xl *:py-2 *:px-4 *:w-fit *:hover:cursor-pointer *:transition text-sky-700 font-bold"
-    id="itens-list">
-  </div>
+    </section>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="index.js"></script>
+  <script src="action-button.js"></script>
 </body>
 
 </html>
