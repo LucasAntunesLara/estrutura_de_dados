@@ -62,6 +62,7 @@ class AVL {
 
     if (balance > 1 && this.getBalanceFactor(node.left) < 0) {
       node.left = this.rotateLeft(node.left)
+
       return this.rotateRight(node)
     }
 
@@ -70,6 +71,7 @@ class AVL {
 
     if (balance < -1 && this.getBalanceFactor(node.right) > 0) {
       node.right = this.rotateRight(node.right)
+
       return this.rotateLeft(node)
     }
 

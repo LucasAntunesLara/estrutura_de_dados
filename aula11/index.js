@@ -40,22 +40,25 @@ class Grafo {
     const anteriores = {}
     const naoVisitados = new Set()
 
-    vertice1 = String(vertice1).trim()
     vertice2 = String(vertice2).trim()
 
     if (!this.vertices[vertice1] || !this.vertices[vertice2]) {
-      console.log('Um ou ambos os vértices não existem no grafo')
+      console.log('Algum dos vértices não existe no grafo')
+
       return null
     }
 
     if (vertice1 === vertice2) {
       console.log(`${vertice1}, custo: 0`)
+
       return {caminho: [vertice1], custo: 0}
     }
 
     for (let vertice in this.vertices) {
       distancias[vertice] = vertice === vertice1 ? 0 : Infinity
+
       anteriores[vertice] = null
+
       naoVisitados.add(vertice)
     }
 
@@ -78,6 +81,7 @@ class Grafo {
 
       for (let aresta of this.vertices[verticeAtual]) {
         const vizinho = aresta.vertice
+
         if (!naoVisitados.has(vizinho)) continue
 
         const distanciaTotal =
@@ -86,6 +90,7 @@ class Grafo {
 
         if (distanciaTotal < distancias[vizinho]) {
           distancias[vizinho] = distanciaTotal
+
           anteriores[vizinho] = verticeAtual
         }
       }
@@ -93,11 +98,14 @@ class Grafo {
 
     if (distancias[vertice2] === Infinity) {
       console.log('Não há caminho entre os vértices')
+
       return null
     }
 
     const caminho = []
+
     let atual = vertice2
+
     const custoTotal = distancias[vertice2]
 
     while (atual !== null) {
@@ -106,6 +114,7 @@ class Grafo {
     }
 
     console.log(` ${caminho.join(' -> ')}, custo: ${custoTotal}`)
+
     return {
       caminho,
       custo: custoTotal,
